@@ -124,6 +124,13 @@ class StdEngine(object):
         # instantiated:
         self.service_obj = []
 
+        # Versions before v4.2 did not have the service group 'xtype_services'. Set a default
+        # for them:
+        config_dict['Engine']['Services'].setdefault('xtype_services',
+                                                     ['weewx.wxxtypes.StdWXXTypes',
+                                                      'weewx.wxxtypes.PressureCooker',
+                                                      'weewx.wxxtypes.RainRater'])
+
         # Wrap the instantiation of the services in a try block, so if an
         # exception occurs, any service that may have started can be shut
         # down in an orderly way.
